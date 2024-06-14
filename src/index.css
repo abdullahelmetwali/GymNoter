@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+@tailwind variants;
+
+.active{
+  background-color: #3636366b;
+  border-radius: 1.5rem;
+}
+
+h2{
+  color:  red;
+}
+/* For Loading */
+.loader {
+  display: inline-block;
+  background: #333;
+  background-image: linear-gradient(to right, #444 0%, #555 20%, #444 40%, #333 100%);
+  background-repeat: no-repeat;
+  background-size: 1000px 100%;
+  animation: loader 2s infinite linear;
+}
+
+@keyframes loader {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.loader-line {
+  width: 50%;
+  height: 20px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
