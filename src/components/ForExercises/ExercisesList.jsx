@@ -1,40 +1,29 @@
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { add } from "../../store/storeSlices/counterSlice";
-const ExercisesList = ({ products }) => {
-  const dispatch = useDispatch();
+import ExerciseBox from "./ExerciseBox";
+import { useParams } from "react-router-dom";
+const ExercisesList = ({ exercises }) => {
+  const { contentUrl } = useParams();
   return (
     <>
-      {products.map((product, index) => (
-        <div key={index} className="bg-white text-black w-1/2 ">
-          <NavLink
-            to={`/exercises/${product.category}/${product.title}`}
-            onClick={() => {
-              dispatch(add(product));
-            }}
-          >
-            <div>
-              <img src={product.images[0]} className=" w-1/3 h-1/4" />
-            </div>
-          </NavLink>
-          <NavLink
-            to={`/exercises/${product.category}/${product.title}`}
-            onClick={() => dispatch(add(product))}
-          >
-            <h1>{product.title}</h1>
-          </NavLink>
-        </div>
-      ))}
+      {exercises.length !== 0 ? (
+        exercises.map((exercise, index) => (
+          <ExerciseBox exercise={exercise} key={index} />
+        ))
+      ) : (
+        <p className="text-nowrap">
+          Sorry no exercises updated for{" "}
+          <strong className="uppercase">{contentUrl}</strong>
+        </p>
+      )}
     </>
   );
 };
 
 ExercisesList.propTypes = {
-  products: PropTypes.arrayOf(
+  exercises: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string,
-      images: PropTypes.arrayOf(PropTypes.string),
+      name: PropTypes.string,
+      gifUrl: PropTypes.string,
     })
   ),
 };

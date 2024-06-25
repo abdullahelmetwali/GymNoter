@@ -1,26 +1,27 @@
 import PropTypes from "prop-types";
-
-const SearchedList = ({ searchedProducts }) => {
+import ExerciseBox from "./ExerciseBox";
+const SearchedList = ({ searchedExercises , searchVal}) => {
   return (
-    <section>
-      {searchedProducts.map((pro, ind) => (
-        <>
-          <div key={ind}>
-            <img src={pro.images[0] || pro.images} className="w-1/2 h-1/2" />
-            <h1>{pro.title}</h1>
-          </div>
-        </>
-      ))}
-    </section>
+    <>
+      { searchedExercises.length ?
+      searchedExercises.map((ex, index) => (
+        <ExerciseBox exercise={ex} key={index}/>
+      )) : (
+      <div >
+       NO SEARCH FOR <span className="text-red-600">{searchVal}</span>
+      </div>
+    )}
+</>
   );
 };
 export default SearchedList;
 
 SearchedList.propTypes = {
-  searchedProducts: PropTypes.arrayOf(
+  searchedExercises: PropTypes.arrayOf(
     PropTypes.shape({
-      title: PropTypes.string,
-      images: PropTypes.arrayOf(PropTypes.string),
+      name: PropTypes.string,
+      gifUrl: PropTypes.string,
     })
   ),
+  searchVal : PropTypes.string
 };

@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {};
 
-const counterSlice = createSlice({
-  name: "counter",
+const nowExerciseSlice = createSlice({
+  name: "exercise",
   initialState,
   reducers: {
     add: (state, action) => {
@@ -14,5 +14,5 @@ const counterSlice = createSlice({
   },
 });
 
-export const { add, subct } = counterSlice.actions;
-export default counterSlice.reducer;
+export const { add, subct } = nowExerciseSlice.actions;
+export default nowExerciseSlice.reducer;

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../store/storeSlices/userSlice";
@@ -10,6 +9,7 @@ const UserAcc = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [users, setUsers] = useState();
+  const [error , setError] = useState('')
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -28,23 +28,32 @@ const UserAcc = () => {
         (user) => user.email === email && user.password === password
       );
       if (theGettedUser) {
-        navigate(`/user/${theGettedUser.fisrtName}${theGettedUser.lastName}`);
+        navigate(`/user/${theGettedUser.firstName}${theGettedUser.lastName}`);
         dispatch(getUser(theGettedUser));
       }
     } else {
-      ("");
+      setError('Incorrect Email or Password')
     }
   };
   return (
     // emily.johnson@x.dummyjson.com
     // emilyspass
-    <>
-      <form action="#" className="bg-black mx-10 grid gap-7">
+    <section className="px-8 py-20">
+      <form
+        onSubmit={(e) => {
+          submitData();
+          e.preventDefault();
+        }}
+        className="w-[50%] mx-auto my-1/2 register relative mob:w-full"
+      >
+        {
+          error ? <p className="text-red-600">{error}</p> : null
+        }
         <input
           type="text"
-          placeholder="email"
+          placeholder="Email Address"
           autoComplete="true"
-          className="bg-white w-1/2 px-3 text-black"
+          className="accountinput"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
@@ -52,24 +61,25 @@ const UserAcc = () => {
         <input
           type="password"
           autoComplete="true"
-          placeholder="password"
-          className="bg-white w-1/2 px-3 text-black"
+          placeholder="Password"
+          className="accountinput mt-2"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button
-          type="submit"
-          className="px-7 py-1 bg-gray-700 w-1/2"
-          onClick={(e) => {
-            submitData();
-            e.preventDefault();
-          }}
-        >
-          submit
-        </button>
+        <div>
+          <button
+            className="w-1/2 bg-blue-800 absolute bottom-3 rounded-lg py-1 tracking-wide"
+            onClick={() => navigate(`/register`)}
+          >
+            Create Account
+          </button>
+          <button type="submit" className="createAccountBtn w-1/3 tracking-wide">
+            Submit
+          </button>
+        </div>
       </form>
-    </>
+    </section>
   );
 };
 

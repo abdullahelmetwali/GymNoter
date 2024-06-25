@@ -1,67 +1,59 @@
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useRef, useMemo, useState } from "react";
-import CaseBody from "./CaseBody";
-const GuestBeast = () => {
-  const beUpdatedToRoutines = useSelector((state) => state.user.routines);
-  const guestRoutines = sessionStorage.getItem("guestRoutines");
+import { useState, useEffect } from "react";
+import CaseBody from "./CaseBody.jsx";
 
-  const Routines = useMemo(() => {
-    return guestRoutines
-      ? JSON.parse(guestRoutines) || beUpdatedToRoutines
-      : [];
-  }, [beUpdatedToRoutines, guestRoutines]);
-  const [allSets, setAllSets] = useState([]);
-  const handleClick = (routine) => {
-    const set = {
-      playedKilograms: kilograms.current,
-      playedReps: reps.current,
-    };
-    setAllSets((prevSet) => {
-      if (set.playedKilograms === "" && set.playedReps === "") {
-        ("");
-      } else {
-        const updatedSets = [...prevSet, set];
-        const routinesArray = JSON.parse(guestRoutines);
-        const indexToUpdate = routinesArray.findIndex(
-          (r) => r.id === routine.id
-        );
-        if (indexToUpdate !== -1) {
-          routinesArray[indexToUpdate].allSets = updatedSets;
-          sessionStorage.setItem(
-            "guestRoutines",
-            JSON.stringify(routinesArray)
-          );
-        }
-        return updatedSets;
-      }
-    });
+const GuestBeast = () => {
+  const [Exercises, setExercises] = useState([]);
+
+  useEffect(() => {
+    const guestExercises = sessionStorage.getItem("guestExercises");
+    if (guestExercises) {
+      setExercises(JSON.parse(guestExercises))
+    } else {
+      setExercises([]);
+    }
+  }, []);
+
+  const deleteExercise = (index) => {
+    const updatedExercises = [...Exercises];
+    updatedExercises.splice(index, 1);
+    sessionStorage.setItem('guestExercises', JSON.stringify(updatedExercises));
+    setExercises(updatedExercises);
   };
 
-  const kilograms = useRef("");
-  const reps = useRef("");
+const saveNote = (exercises, index, noteContent) => {
+  // see exercise index , ( true or false) 
+    const existingProductIndex = Exercises.findIndex(pro => pro.id === exercises[index].id);
+    // IF (!== -1) => true , add note to exercise then push it to Exercises at its index
+    if (existingProductIndex !== -1) {
+        Exercises[existingProductIndex] = {
+            ...Exercises[existingProductIndex],
+            note: noteContent.trim()
+        };
+    } else { // IF false , push the exercise to Exercises with added note 
+        Exercises.push({
+            ...exercises[index],
+            note: noteContent.trim()
+        });
+    }
+    sessionStorage.setItem('guestExercises', JSON.stringify(Exercises));
+};
+
   return (
-    <>
-      <div>
-        <p>Note: The routines will not be saved</p>
-        <p>
-          If you want to save routines, please{" "}
-          <NavLink to={`/login`} className="ml-3 underline text-red-700">
+    <section className="px-10 py-6 mob:px-6">
+      <div className="flex justify-between items-center">
+        <h1>
+          If you want to <strong>SAVE EXERCISES</strong>
+        </h1>
+        <NavLink to={`/login`} className="px-7 py-1 bg-blue-800 rounded-3xl">
             Login
           </NavLink>
-        </p>
       </div>
-      <p>hello</p>
-      <div>
-        <CaseBody
-          Routines={Routines}
-          kilograms={kilograms}
-          reps={reps}
-          handleClick={handleClick}
-          allSets={allSets}
-        />
-      </div>
-    </>
+      <main>
+        <CaseBody Exercises={Exercises} deleteExercise={deleteExercise} saveNote={saveNote}/>
+      </main>
+    </section>
   );
 };
+
 export default GuestBeast;

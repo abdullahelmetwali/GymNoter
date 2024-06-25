@@ -1,105 +1,60 @@
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { add } from "../../store/storeSlices/nowExerciseSlice";
 /* eslint-disable react/prop-types */
-import { useState } from "react";
-const CaseBody = ({ Routines, handleClick, kilograms, reps }) => {
-  const [divNums, setDivNums] = useState(1);
+const CaseBody = ({ Exercises, deleteExercise, saveNote }) => {
+  window.scrollTo({
+    top : 0,
+    behavior : 'smooth'
+  })
+  const dispatch = useDispatch();
   return (
-    <div>
-      {Routines.map((routine, routineIndex) => (
-        <div key={routineIndex} className="py-10 ml-10">
-          <div>
-            <img src={routine.images[0]} className="w-1/3 h-1/3" />
-          </div>
-          <h1>{routine.brand}</h1>
-          <p>{routine.title}</p>
-          <div>
-            <div className="grid bg-white text-black">
-              {routine.allSets.length ? (
-                routine.allSets.map((set, setIndex) => (
-                  <div key={setIndex} className="flex gap-4">
-                    <p>{setIndex + 1}</p>
-                    <input
-                      type="number"
-                      className="w-[5rem]"
-                      placeholder={set.playedKilograms}
-                      onChange={(e) => {
-                        const valueToNumber = parseInt(e.target.value);
-                        kilograms.current = isNaN(valueToNumber)
-                          ? null
-                          : valueToNumber;
-                      }}
-                    />
-                    <input
-                      type="number"
-                      className="w-[5rem]"
-                      placeholder={set.playedReps}
-                      onChange={(e) => {
-                        const valueToNumber = parseInt(e.target.value);
-                        reps.current = isNaN(valueToNumber)
-                          ? null
-                          : valueToNumber;
-                      }}
-                    />
-                    <button
-                      className="bg-red-600 px-1"
-                      onClick={() => handleClick(routine)}
-                    >
-                      save reps
-                    </button>
-                  </div>
-                ))
-              ) : (
-                <div>
-                  {Array.from({ length: divNums }, (_, normalIndex) => (
-                    <div
-                      key={normalIndex}
-                      className="flex gap-3 bg-white text-black"
-                    >
-                      <p>{normalIndex + 1}</p>
-                      <input
-                        type="number"
-                        placeholder="kgs"
-                        className="w-[5rem]"
-                        onChange={(e) => {
-                          const valueToNumber = parseInt(e.target.value);
-                          kilograms.current = isNaN(valueToNumber)
-                            ? null
-                            : valueToNumber;
-                        }}
-                      />
-                      <input
-                        type="number"
-                        placeholder="reps"
-                        className="w-[5rem]"
-                        onChange={(e) => {
-                          const valueToNumber = parseInt(e.target.value);
-                          reps.current = isNaN(valueToNumber)
-                            ? null
-                            : valueToNumber;
-                        }}
-                      />
-                      <button
-                        className="bg-red-600 px-1"
-                        onClick={() => handleClick(routine)}
-                      >
-                        click to save
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <button
-                onClick={() => {
-                  setDivNums(divNums + 1);
-                }}
-              >
-                click to add
-              </button>
+    <main className="bg-white my-8 rounded-xl grid grid-cols-3 mob:grid-cols-1">
+      {Exercises?.map((exercise, exerciseIndex) => (
+        <div
+          key={exerciseIndex}
+          className="flex flex-col justify-items-center py-10 px-6"
+        >
+          <Link
+            to={`/exercises/${exercise.bodyPart.replaceAll(' ','')}/${exercise.id}`}
+            onClick={() => dispatch(add(exercise))}
+          >
+            <div>
+              <img
+                src={exercise.gifUrl}
+                className="w-1/3 h-1/2 rounded-xl mob:w-full mob:h-auto"
+                alt={`Exercise NO.${exerciseIndex + 1}`}
+              />
             </div>
-            <div></div>
+          </Link>
+          <div className="w-full text-black bg-[#b9b9b9b5] p-4 rounded-xl">
+            <Link
+              className="font-bold tracking-wide text-lg"
+              to={`/exercises/${exercise.bodyPart.replaceAll(' ','')}/${exercise.id}`}
+              onClick={() => dispatch(add(exercise))}
+            >
+              {exercise.name}
+            </Link>
+           <div>
+            <textarea name="note" id="note" cols={45} rows={3} className={`rounded-lg p-2 text-md font-medium outline-none w-auto my-2 NOTE${exerciseIndex + 1}`} placeholder={exercise.note ? exercise.note : "Write Your Notes Here"}></textarea>
+           </div>
+           <div>
+            <button className="bg-green-600  text-white mr-2 px-6 py-1 rounded-3xl" onClick={() => saveNote(Exercises , exerciseIndex , document.querySelector(`.NOTE${exerciseIndex + 1}`).value )}>
+              Save Note
+            </button>
+             <button
+              onClick={() => deleteExercise(exerciseIndex)}
+              className="bg-red-600  text-white px-6 py-1 rounded-3xl "
+            >
+              Delete
+            </button>
+           </div>
           </div>
+          <hr className="mx-3 mt-20 hidden mob:block" />
         </div>
       ))}
-    </div>
+    </main>
   );
 };
+
 export default CaseBody;

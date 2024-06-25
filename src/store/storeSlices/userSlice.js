@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: {},
-  routines: [],
+  exercises: [],
 };
 const userSlice = createSlice({
   name: "userSlice",
@@ -17,19 +17,19 @@ const userSlice = createSlice({
       const seeIfRealUser = storedUserDetails
         ? JSON.parse(localStorage.getItem("userDetails"))[0]
         : {};
-      const isAlreadyAdded = state.routines.some(
+      const isAlreadyAdded = state.exercises.some(
         (exercise) => exercise.id === newExercise.id
       );
       if (!isAlreadyAdded) {
         if (storedUserDetails) {
-          const routines = state.routines;
-          routines.push(newExercise);
-          const userDetails = [seeIfRealUser, routines];
+          const exercises = state.exercises;
+          exercises.push(newExercise);
+          const userDetails = [seeIfRealUser, exercises];
           localStorage.setItem("userDetails", JSON.stringify(userDetails));
         } else {
-          const routines = state.routines;
-          routines.push(newExercise);
-          sessionStorage.setItem("guestRoutines", JSON.stringify(routines));
+          const exercises = state.exercises;
+          exercises.push(newExercise);
+          sessionStorage.setItem("guestExercises", JSON.stringify(exercises));
         }
       }
     },
