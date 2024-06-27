@@ -3,7 +3,7 @@ export default {
   content: ['./index.html','./src/**/*'],
   theme: {
     extend: {
-      screens:{
+      screens : {
         tab : {max : '1000px'},
         mob : {max : '767px'}
       }

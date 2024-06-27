@@ -32,14 +32,12 @@ footer{
 }
 
 .loader-wrapper {
-  display: flex;
-  flex-direction: column;
+  display: grid;
   gap: 1rem;
 }
 
-.loader-line {
-  width: 50%;
-  height: 20px;
+.loader-box {
+  height: 100px;
   margin-bottom: 10px;
   border-radius: 4px;
 }
