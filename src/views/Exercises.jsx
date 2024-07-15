@@ -6,7 +6,7 @@ import ExercisesList from "../components/ForExercises/ExercisesList";
 const Exercises = () => {
   const { contentUrl } = useParams();
   const url =
-    "https://exercisedb.p.rapidapi.com/exercises?limit=1324&offset=0";
+    'https://exercisedb.p.rapidapi.com/exercises?limit=1324&offset=0';
   const itemsPerPage = 25; // Number of exercises per page
   const [searchVal, setSearchVal] = useState("");
   const [exercises, setExercises] = useState([]);
@@ -17,12 +17,12 @@ const Exercises = () => {
 
   useEffect(() => {
     const options = {
-      method: "GET",
-      headers: {
-        "x-rapidapi-key": "79d3dc995bmsh103931bd4ac29b0p1298dbjsn4d4f616ba141",
-        "x-rapidapi-host": "exercisedb.p.rapidapi.com",
-      },
-    };
+	method: 'GET',
+	headers: {
+		'x-rapidapi-key': '30aa3b5376msh97edc94a789cf73p19c72djsnf3ec3e65c079',
+		'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+	}
+};
 
     const fetchExercises = async () => {
       try {
@@ -91,13 +91,13 @@ const Exercises = () => {
 
   // Conditional rendering for error and loading state
   if (error) {
-    return <p>Error: {error}</p>;
+    return  <h1 className="text-center">Error : {error}</h1>;
   }
 
   if (isLoading) {
     return (
-      <div className="loader-wrapper grid-cols-5 mob:grid-cols-3">
-        {[...Array(10)].map((_, index) => (
+      <div className="loader-wrapper px-6 grid-cols-5 mob:grid-cols-2">
+        {[...Array(12)].map((_, index) => (
           <div key={index} className="loader loader-box"></div>
         ))}
       </div>
@@ -183,7 +183,7 @@ const Exercises = () => {
             ].map((bodyPart, index) => (
               <Link
                 key={index}
-                className={`py-1 px-6 text-white text-nowrap rounded-3xl uppercase cursor-pointer ${
+                className={`py-1 px-6 text-white whitespace-nowrap w-full text-nowrap rounded-3xl uppercase cursor-pointer ${
                   contentUrl ===
                   bodyPart.replaceAll(" ", "").toLocaleLowerCase()
                     ? "bg-[#7070706b]"
@@ -208,7 +208,7 @@ const Exercises = () => {
           />
         </div>
       </section>
-      <main className="grid grid-cols-5 gap-3 mx-4 py-5 mob:grid-cols-3">
+      <main className="grid grid-cols-5 gap-3 mx-4 py-5 mob:grid-cols-2">
         {searchVal && searchedEx.length > 0 ? (
           <SearchedList
             searchedExercises={currentExercises}

@@ -28,6 +28,24 @@ const RealBeast = () => {
     );
     setUserExercises(updatedExercises);
   };
+  const saveNote = (exercises, index, noteContent) => {
+  // see exercise index , ( true or false) 
+    const existingProductIndex = userExercises.findIndex(pro => pro.id === exercises[index].id);
+    // IF (!== -1) => true , add note to exercise then push it to Exercises at its index
+    if (existingProductIndex !== -1) {
+        userExercises[existingProductIndex] = {
+            ...userExercises[existingProductIndex],
+            note: noteContent.trim()
+        };
+    } else { // IF false , push the exercise to Exercises with added note 
+        userExercises.push({
+            ...exercises[index],
+            note: noteContent.trim()
+        });
+    }
+    const updatedUserDetails = [RealUser , userExercises]
+    localStorage.setItem('userDetails', JSON.stringify(updatedUserDetails));
+};
   return (
     <section className="px-8 py-6">
       <div className="flex justify-between items-center">
@@ -49,7 +67,7 @@ const RealBeast = () => {
           Log Out
         </button>
       </div>
-      <CaseBody Exercises={userExercises} deleteExercise={deleteExercise} />
+      <CaseBody Exercises={userExercises} deleteExercise={deleteExercise} saveNote={saveNote}/>
     </section>
   );
 };

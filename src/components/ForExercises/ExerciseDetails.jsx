@@ -17,10 +17,10 @@ const ExerciseContent = () => {
       top : 0,
       behavior :'smooth'
     })
-    const options = {
+const options = {
 	method: 'GET',
 	headers: {
-		'x-rapidapi-key': '79d3dc995bmsh103931bd4ac29b0p1298dbjsn4d4f616ba141',
+		'x-rapidapi-key': '30aa3b5376msh97edc94a789cf73p19c72djsnf3ec3e65c079',
 		'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
 	}
 };
@@ -46,7 +46,7 @@ const ExerciseContent = () => {
           })
         )
       } catch (error) {
-        return <h1>Error : {error.message}</h1>;
+        return <h1 className="text-center">Error : {error.message}</h1>;
       }
     };
     fetchData();

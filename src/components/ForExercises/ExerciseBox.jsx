@@ -13,7 +13,7 @@ const ExerciseBox = ({ exercise }) => {
           }}
         >
           <div>
-            <img src={exercise.gifUrl} className=" w-[9rem] h-fit rounded-lg" />
+            <img src={exercise.gifUrl} className=" w-[9rem] h-fit rounded-lg mob:w-full" />
           </div>
         </NavLink>
         <NavLink
