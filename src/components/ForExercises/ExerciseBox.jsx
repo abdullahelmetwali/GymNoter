@@ -11,13 +11,14 @@ const ExerciseBox = ({ exercise }) => {
           onClick={() => {
             dispatch(add(exercise));
           }}
+          className={`w-full`}
         >
           <div>
-            <img src={exercise.gifUrl} className=" w-[9rem] h-fit rounded-lg mob:w-full" />
+            <img src={exercise.gifUrl} className=" w-[9rem] h-fit rounded-lg mob:w-[20rem]" />
           </div>
         </NavLink>
         <NavLink
-        className={` font-semibold tracking-wide text-center`}
+        className={` font-semibold text-nowrap tracking-wide text-center mob:w-[17rem] mob:text-wrap w-20rem`}
           to={`/exercises/${exercise.bodyPart.replaceAll(' ','')}/${exercise.id}`}
           onClick={() => dispatch(add(exercise))}
         >

@@ -34,11 +34,11 @@ const NowExercise = ({ Exercise }) => {
           <h2 className="text-black font-semibold tracking-wide text-lg my-2">
             SECONDARY MUSCLES :
           </h2>
-          <div className="flex gap-2">
+          <div className="flex gap-2 mob:flex-wrap">
             {(Exercise.secondaryMuscles || []).map((muscle, index) => (
               <Link
                 key={index}
-                className="rounded-2xl bg-black font-semibold px-4 py-1 uppercase"
+                className="rounded-2xl w-fit bg-black font-semibold px-4 py-1 uppercase mob:text-wrap"
                 to={`/exercises/${muscle.replaceAll(" ", "")}`}
               >
                 - {muscle}
