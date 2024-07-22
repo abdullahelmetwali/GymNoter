@@ -16,7 +16,7 @@ const NowExercise = ({ Exercise }) => {
         <img src={Exercise.gifUrl} className="w-1/2 rounded-lg mob:w-[90%]" />
       </div>
       <div>
-        <h1 className="text-2xl font-bold tracking-wide text-black text-nowrap uppercase">
+        <h1 className="text-2xl font-bold tracking-wide text-black text-nowrap uppercase mob:text-wrap">
           {Exercise.name}
         </h1>
         <div>
